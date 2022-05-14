@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: autolabel
+spec:
+  serviceAccountName: autolabel-role-sa
+  containers:
+  - name: autolabel
+    image: litianxiang/autolabel:latest
+    imagePullPolicy: Never
+
+

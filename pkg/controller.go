@@ -1,11 +1,13 @@
 package pkg
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"time"
 
 	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
 	informer "k8s.io/client-go/informers/core/v1"
@@ -103,13 +105,10 @@ func (c *controller) syncService(key string) error {
 	}
 	labels["autolabel"] = labelValue
 	pod.SetLabels(labels)
-	/*
-		err := c.client.NetworkingV1().Ingresses(namespaceKey).Delete(context.TODO(), name, v13.DeleteOptions{})
-		if err != nil {
-			return err
-		}
-	*/
-
+	_, err = c.client.CoreV1().Pods(namespaceKey).Update(context.Background(), pod, metav1.UpdateOptions{})
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

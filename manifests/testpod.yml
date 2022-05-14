@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod
+  annotations:
+    autolabel/testpod: master
+spec:
+  containers:
+  - name: testpod
+    image: busybox:1.28
+    command: [ "sleep", "1000000" ]
+
+
